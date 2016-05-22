@@ -14,6 +14,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -58,7 +59,27 @@ class ProductCatalogApiGateWayController {
         return responseEntity.getBody();
     }
 
+    @HystrixCommand(fallbackMethod = "getPriceFallback")
+    @RequestMapping(value = "products/price/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getPrice(@RequestParam(value = "name", required = true) final String name, @RequestParam(value = "type", required = true) final String type) {
+        final ParameterizedTypeReference<String> ptr = new ParameterizedTypeReference<String>() {
+        };
+        String url = "http://pricing-service/products/price/get";
+        final HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("name", name)
+                .queryParam("type", type);
+        final HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.GET, entity, ptr);
+        return responseEntity.getBody();
+    }
+
     public List<ProductVo> getProductsFallback() {
         return Collections.emptyList();
+    }
+
+    public String getPriceFallback(final String name, final String type) {
+        return "Pricing Service down";
     }
 }

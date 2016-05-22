@@ -10,5 +10,7 @@ import java.util.List;
  */
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    List<Product> findByTypeOrName(String type, String name);
+    List<Product> findByTypeAndName(String type, String name);
+
+    List<Product> findByType(String type);
 }

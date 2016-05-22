@@ -26,8 +26,13 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductVo> getProductsByType(@RequestParam(value = "type", required = false) final String type, @RequestParam(value = "name", required = false) final String name) {
-        return productService.getProductsByType(type, name);
+    public List<ProductVo> getProductsByTypeAndName(@RequestParam(value = "type", required = false) final String type, @RequestParam(value = "name", required = false) final String name) {
+        return productService.getProductsByTypeAndName(type, name);
+    }
+
+    @RequestMapping(value = "/searchByType", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductVo> getProductsByTypeAndName(@RequestParam(value = "type", required = false) final String type) {
+        return productService.getProductsByType(type);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

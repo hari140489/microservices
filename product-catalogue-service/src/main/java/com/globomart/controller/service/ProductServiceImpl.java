@@ -38,8 +38,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductVo> getProductsByType(String type, String name) {
-        List<Product> products = productRepository.findByTypeOrName(type, name);
+    public List<ProductVo> getProductsByTypeAndName(String type, String name) {
+        List<Product> products = productRepository.findByTypeAndName(type, name);
+        return convertProducts(products);
+    }
+
+    @Override
+    public List<ProductVo> getProductsByType(String type) {
+        List<Product> products = productRepository.findByType(type);
         return convertProducts(products);
     }
 

@@ -5,6 +5,7 @@ import com.globomart.dao.PricingRepository;
 import com.globomart.service.IPricingService;
 import com.globomart.service.PricingServiceImpl;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -16,8 +17,8 @@ import org.springframework.web.client.RestTemplate;
 public class ApplicationConfig {
 
     @Bean
-    public PricingController pricingController(final RestTemplate restTemplate, final IPricingService pricingService) {
-        return new PricingController(restTemplate, pricingService);
+    public PricingController pricingController(final LoadBalancerClient loadBalancerClient, final IPricingService pricingService) {
+        return new PricingController(loadBalancerClient, pricingService);
     }
 
     @Bean
