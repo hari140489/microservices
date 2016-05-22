@@ -1,0 +1,30 @@
+#Microservices
+
+- Download the zip and extract. Run mvn clean install –DskipTests=true on all the projects
+- You will have jar files located each project bin or target folder.
+- Discovery Service: Run command java –jar service-discovery-0.0.1-SNAPSHOT.jar
+    - It runs on http://localhost:8070
+- Product Catalogue Service: Run command java –jar product-catalogue-service-0.0.1-SNAPSHOT.jar
+    - It runs on http://localhost:8001
+    - Create: Open any restful client, invoke http://localhost:8001/products with json for example {“name”: “maruti”, “type”:”car”} with request method POST and content-type application/json.
+    - Retrieve: http://localhost:8001/products with request method GET
+    - Delete: http://localhost:8001/products/{id} with request method DELETE. Id can anyone the products id retrieved from Retrieve url.
+    - Search: http://localhost:8001/products/searchByType?type=car with request method GET
+- Pricing Service: Run command java –jar pricing-service-0.0.1-SNAPSHOT.jar
+    - It runs on http://localhost:8002
+    - Retrieve Price: http://localhost:8002/products/price/get?name=maruti&type=car . name and type parameters are mandatory and both should match a single record present in database
+- Open discovery service url http://localhost:8070 and observe that two services are registered.
+- Hystrix Circuit Breaker/Zuul Proxy: Run command java –jar client-gateway-0.0.1-SNAPSHOT.jar
+    - It runs on http://localhost:8003
+    - Monitoring is enabled for two restful end points shown below
+        - http://localhost:8002/products/price/get?name=maruti&type=car
+        - http://localhost:8001/products
+        - Invoke url http://localhost:8003/hystrix.stream
+        - After hitting this url, invoke the above two restful end points again(this is done only once and it enables hystrix stream to retrieve the health status)
+        - Now, browser continuously refreshes after hystrix pings the restful services for health status. Browser can be closed here.
+-   Monitoring : Run command java –jar hystrix-dashboard-0.0.1-SNAPSHOT.jar
+    - Hystrix dashboard runs on http://localhost:8004/hystrix.html
+    - Now copy the url http://localhost:8003/hystrix.stream
+    - Paste it in the test field where turbine stream input is present and hit monitor.
+    - Now, you are redirected to monitoring screen where the above two two restful end points health is shown.
+    - Now continuously hit the above restful service. You can observe the graph of the corresponding services where it shows the success or failure state.
