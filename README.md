@@ -9,7 +9,7 @@
 - Config Server: Inside config-server folder
     - Run command "mvn spring-boot:run" command (it runs on http://localhost:8000) 
 - Gateway/Zuul Proxy: Inside client-api-gateway folder
-    - Run command "mvn spring:boot:run" (it runs on http://localhost:8003)
+    - Run command "mvn spring-boot:run" (it runs on http://localhost:8003)
     - It gets registered automatically in discovery server
 - Product Catalogue Service: Inside product-catalogue-service folder
     - Run command mvn spring-boot:run multiple times in different command prompts
