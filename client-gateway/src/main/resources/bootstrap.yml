@@ -2,3 +2,12 @@ spring:
   cloud:
     config:
       uri: http://localhost:8000
+
+zuul:
+  routes:
+    pricing-service:
+      path: /**
+      serviceId: pricing-service
+    product-catalogue-service:
+      path: /**
+      serviceId: product-catalogue-service
