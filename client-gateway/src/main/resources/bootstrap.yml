@@ -4,10 +4,11 @@ spring:
       uri: http://localhost:8000
 
 zuul:
+  prefix: /api
   routes:
     pricing-service:
-      path: /**
+      path: /pricing-service/**
       serviceId: pricing-service
     product-catalogue-service:
       path: /**
-      serviceId: product-catalogue-service
+      serviceId: /product-catalogue-service/**
