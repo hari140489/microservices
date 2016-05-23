@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: client-api-gateway
+
+server:
+  port: 8003
+
