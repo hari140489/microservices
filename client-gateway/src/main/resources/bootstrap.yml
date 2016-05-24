@@ -6,9 +6,18 @@ spring:
 zuul:
   prefix: /api
   routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000/resource
+    user:
+      path: /user/**
+      url: http://localhost:9999/uaa/user
     pricing-service:
       path: /pricing-service/**
       serviceId: pricing-service
     product-catalogue-service:
-      path: /**
-      serviceId: /product-catalogue-service/**
+      path: /product-catalogue-service/**
+      serviceId: product-catalogue-service
+logging:
+  level:
+    org.springframework.security: DEBUG
