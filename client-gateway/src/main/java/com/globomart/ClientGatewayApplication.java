@@ -67,7 +67,7 @@ public class ClientGatewayApplication extends WebSecurityConfigurerAdapter {
 
     private CsrfTokenRepository csrfTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
+        repository.setHeaderName("XSRF-TOKEN");
         return repository;
     }
 }
